@@ -5,3 +5,5 @@
 !bin/
 bin/*
 !/bin/scripts/
+
+!.xorg.conf.d/
