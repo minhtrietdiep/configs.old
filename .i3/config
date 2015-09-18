@@ -11,7 +11,6 @@
 
 set $mod Mod1
 set $win Mod4
-set $i3lockg i3lock -n -c 202020
 set $i3block ~/bin/scripts/i3block.sh
 set $updatevol pkill -SIGRTMIN+10 i3blocks
 
@@ -208,19 +207,16 @@ bindsym XF86AudioLowerVolume exec --no-startup-id "amixer -q set Master 5%- ; $u
 bindsym XF86AudioMute exec --no-startup-id "amixer -q set Master toggle ; $updatevol"
 
 # Lock
-#bindsym $win+l exec --no-startup-id i3lock -n -c 202020
 bindsym $win+l exec --no-startup-id $i3block
-exec --no-startup-id xautolock -time 10 -locker '$i3block'
 exec --no-startup-id xss-lock -- $i3block
+exec --no-startup-id xautolock -time 10 -locker '$i3block'
 
-#set $Locker i3lock -c 000000 && sleep 1
-set $Locker ~/bin/scripts/i3block.sh
 set $mode_system System (l) lock, (e) logout, (s) suspend, (r) reboot, (Shift+s) shutdown
 mode "$mode_system" {
-    bindsym l exec --no-startup-id $Locker, mode "default"
+    bindsym l exec --no-startup-id $i3block, mode "default"
     bindsym e exec --no-startup-id i3-msg exit, mode "default"
-    bindsym s exec --no-startup-id $Locker && systemctl suspend, mode "default"
-    # bindsym h exec --no-startup-id $Locker && systemctl hibernate, mode "default"
+    bindsym s exec --no-startup-id $i3block && systemctl suspend, mode "default"
+    # bindsym h exec --no-startup-id $i3lock && systemctl hibernate, mode "default"
     bindsym r exec --no-startup-id systemctl reboot, mode "default"
     bindsym Shift+s exec --no-startup-id systemctl poweroff -i, mode "default"  
 
@@ -238,24 +234,17 @@ bindsym Print exec --no-startup-id scrot '%Y-%m-%d-%H-%M-%S.png' -e 'mv $f "/hom
 
 # Startup shit
 # exec xrandr --output LVDS1 --scale 1.4055636896x1.40625 --panning 1920x1080
-#exec --no-startup-id feh --bg-fill ~/Dropbox/Wallpapers/Peugeot205-T16.jpg
-#exec --no-startup-id feh --bg-scale ~/Dropbox/Wallpapers/Monogatari/081\ \-\ pjpv1QE.png
-#exec --no-startup-id feh --bg-scale ~/Dropbox/Wallpapers/Windows\ 10\ Hero\ Wallpaper/img0_3840x2160_4K.jpg
 exec --no-startup-id feh --bg-fill /home/mt/Dropbox/Wallpapers/1373586003246.png
-exec --no-startup-id gnome-settings-daemon
-exec --no-startup-id steam -silent
-exec --no-startup-id dropbox start
-exec --no-startup-id nm-applet 
-exec --no-startup-id synclient SingleTapTimeout=100
-exec --no-startup-id synclient HorizTwoFingerScroll=1
-exec --no-startup-id xset m 1 0
 exec --no-startup-id setxkbmap -layout us,us -variant ,intl -option grp:win_space_toggle
 exec --no-startup-id ~/bin/menutray/menutray -g
+exec --no-startup-id gnome-settings-daemon
+exec --no-startup-id nm-applet 
+exec --no-startup-id dropbox start
+exec --no-startup-id steam -silent
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
 	position top
-        # status_command i3status -c ~/.i3/i3status.conf
 	status_command i3blocks -c ~/.i3/i3blocks.conf
 }
