@@ -1,9 +1,8 @@
 /*
 !.gitignore
+!README.md
 !.i3/
-
 !bin/
 bin/*
 !/bin/scripts/
-
 !.xorg.conf.d/
