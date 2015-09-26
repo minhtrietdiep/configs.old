@@ -13,14 +13,16 @@ set $mod Mod1
 set $win Mod4
 set $i3block ~/bin/scripts/i3block.sh
 set $updatevol pkill -SIGRTMIN+10 i3blocks
+set $updatekeystat pkill -SIGRTMIN+11 i3blocks
 
 # Requirement for i3-gaps: removes titlebars and borders
-for_window [class="^.*"] border pixel 4
+for_window [class="^.*"] border pixel 2
 
-gaps inner 8
+gaps inner 4
 gaps outer 0
 
-# smart_borders on
+smart_borders on
+smart_gaps    on
 
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -28,7 +30,7 @@ gaps outer 0
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
 #font pango:DejaVu Sans Mono 8
-font pango:Monospace 8
+font pango:Droid Sans 8
 # Before i3 v4.8, we used to recommend this one as the default:
 # font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 # The font above is very space-efficient, that is, it looks good, sharp and
@@ -37,7 +39,7 @@ font pango:Monospace 8
 # font, it doesn’t scale on retina/hidpi displays.
 
 # class                 border  backgr. text    indicator
-client.focused          #444444 #2aa198 #ffffff #ff0085
+client.focused          #444444 #ee7600 #ffffff #ff0085
 client.focused_inactive #333333 #0d272e #ffffff #ff0085
 client.unfocused        #333333 #073642 #ffffff #ff0085
 client.urgent           #2f343a #900000 #ffffff #900000
@@ -194,8 +196,8 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 # send key status to i3blocks
-bindsym --release Caps_Lock exec --no-startup-id pkill -SIGRTMIN+11 i3blocks
-bindsym --release Num_Lock  exec --no-startup-id pkill -SIGRTMIN+11 i3blocks
+bindsym --release Caps_Lock exec --no-startup-id $updatekeystat
+bindsym --release Num_Lock  exec --no-startup-id $updatekeystat
 
 # brightness
 bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -time 200 -dec 10
@@ -234,7 +236,10 @@ bindsym Print exec --no-startup-id scrot '%Y-%m-%d-%H-%M-%S.png' -e 'mv $f "/hom
 
 # Startup shit
 # exec xrandr --output LVDS1 --scale 1.4055636896x1.40625 --panning 1920x1080
-exec --no-startup-id feh --bg-fill /home/mt/Dropbox/Wallpapers/1373586003246.png
+# exec --no-startup-id feh --bg-fill /home/mt/Dropbox/Wallpapers/1373586003246.png
+# exec --no-startup-id feh --bg-fill /home/mt/Dropbox/Wallpapers/1410220295744.png
+# exec --no-startup-id feh --bg-fill /home/mt/Dropbox/Wallpapers/1403619911554.jpg
+exec --no-startup-id feh --bg-fill /home/mt/Dropbox/Wallpapers/1443218990209.jpg
 exec --no-startup-id setxkbmap -layout us,us -variant ,intl -option grp:win_space_toggle
 exec --no-startup-id ~/bin/menutray/menutray -g
 exec --no-startup-id gnome-settings-daemon
@@ -245,6 +250,16 @@ exec --no-startup-id steam -silent
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-	position top
+	position bottom
 	status_command i3blocks -c ~/.i3/i3blocks.conf
+	font pango:Droid Sans 8
+	#font pango:Futura 8
+	colors {
+		background #27383e
+		# separator  #ffffff
+		# statusline #ffffff
+
+		#focused_workspace  #e8420c #ee7600 #032438
+		#inactive_workspace #000000 #e34300 #000000
+	}
 }

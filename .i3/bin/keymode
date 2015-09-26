@@ -1,0 +1,4 @@
+#!/bin/bash
+# Yell at i3blocks to update key status
+DERP=$(timedatectl | grep Local)
+echo $DERP
