@@ -1,4 +1,11 @@
 #!/bin/bash
-# Yell at i3blocks to update key status
-DERP=$(timedatectl | grep Local)
-echo $DERP
+#
+# Prints current keyboard layout
+#
+#MODE=$(xset -q | grep LED | awk '{ print $10 }' | cut -c5)
+MODE=$(setxkbmap -query | grep variant)
+if [[ $MODE == "variant:    intl" ]] ; then
+	echo "INTL"
+else
+	echo "US"
+fi

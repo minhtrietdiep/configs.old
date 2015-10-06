@@ -14,6 +14,8 @@ set $win Mod4
 set $i3block ~/bin/scripts/i3block.sh
 set $updatevol pkill -SIGRTMIN+10 i3blocks
 set $updatekeystat pkill -SIGRTMIN+11 i3blocks
+set $updatebr pkill -SIGRTMIN+5 i3blocks
+set $updatekb pkill -SIGRTMIN+4 i3blocks
 
 # Requirement for i3-gaps: removes titlebars and borders
 for_window [class="^.*"] border pixel 2
@@ -200,8 +202,8 @@ bindsym --release Caps_Lock exec --no-startup-id $updatekeystat
 bindsym --release Num_Lock  exec --no-startup-id $updatekeystat
 
 # brightness
-bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -time 200 -dec 10
-bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -time 200 -inc 10
+bindsym XF86MonBrightnessDown exec --no-startup-id "xbacklight -time 200 -dec 5; $updatebr"
+bindsym XF86MonBrightnessUp exec --no-startup-id "xbacklight -time 200 -inc 5; $updatebr"
 
 # sound
 bindsym XF86AudioRaiseVolume exec --no-startup-id "amixer -q set Master 5%+ unmute ; $updatevol"
@@ -233,6 +235,9 @@ bindsym Print exec --no-startup-id scrot '%Y-%m-%d-%H-%M-%S.png' -e 'mv $f "/hom
 
 # Language
 # bindsym $win+space exec --no-startup-id "setxkbmap -model pc105 -layout us,nl -option grp:alt_shift_toggle"
+# bindsym $win+space exec --no-startup-id $updatekb
+bindsym Ctrl+$mod+1 exec --no-startup-id setxkbmap us && $updatekb
+bindsym Ctrl+$mod+2 exec --no-startup-id setxkbmap us -variant intl && $updatekb
 
 # Startup shit
 # exec xrandr --output LVDS1 --scale 1.4055636896x1.40625 --panning 1920x1080
@@ -240,7 +245,7 @@ bindsym Print exec --no-startup-id scrot '%Y-%m-%d-%H-%M-%S.png' -e 'mv $f "/hom
 # exec --no-startup-id feh --bg-fill /home/mt/Dropbox/Wallpapers/1410220295744.png
 # exec --no-startup-id feh --bg-fill /home/mt/Dropbox/Wallpapers/1403619911554.jpg
 exec --no-startup-id feh --bg-fill /home/mt/Dropbox/Wallpapers/1443218990209.jpg
-exec --no-startup-id setxkbmap -layout us,us -variant ,intl -option grp:win_space_toggle
+# exec --no-startup-id setxkbmap -layout us,us -variant ,intl -option grp:win_space_toggle
 exec --no-startup-id ~/bin/menutray/menutray -g
 exec --no-startup-id gnome-settings-daemon
 exec --no-startup-id nm-applet 
