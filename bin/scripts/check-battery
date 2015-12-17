@@ -32,7 +32,7 @@ fi
 
 if [[ "$percent" -lt "$percent_crit" && "$status" == "Discharging" ]]; then
 #	echo "Suspending."
-	systemctl suspend
+	systemctl suspend &
 	exit
 fi
 
@@ -42,7 +42,7 @@ if [[ "$percent" -lt "$percent_low" ]]; then
 		exit
 	fi
 	touch /tmp/battery_warning
-	i3-nagbar -m 'Battery is almost empty!'
+	i3-nagbar -m 'Battery is almost empty!' &
 elif [[ -f /tmp/battery_warning ]]; then
 #		echo "Removed battery_warning"
 		rm /tmp/battery_warning
